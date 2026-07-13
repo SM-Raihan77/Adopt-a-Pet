@@ -5,7 +5,7 @@ import { Button, Card, Description, FieldError, Form, Input, Label, Separator, T
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -33,12 +33,13 @@ const LoginPage: React.FC = () => {
     });
 
     if (data) {
-    //   toast.success("Logged in successfully");
+      toast.success("Logged in successfully");
       router.push("/"); 
     }
 
     if (error) {
     //   toast.error("Error logging in");
+      toast.error("Error logging in");
     }
   };
 

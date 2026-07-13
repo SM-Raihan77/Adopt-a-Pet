@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import ToastProvider from "./provider/ToastProvider";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,8 +30,56 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <Navbar />
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+
+        <Navbar />
+        <main className="min-h-screen container mx-auto">
+          {children}
+        </main>
+        <Footer />
+
+        <ToastProvider />
+
+      </body>
     </html>
   );
 }
+// import { Outfit } from "next/font/google";
+// import "./globals.css";
+// import Navbar from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+// import ThemesProvider from "./provider/ThemesProvider";
+// import ToastProvider from "./provider/ToastProvider";
+
+// const OutfitFont = Outfit({
+//   subsets: ["latin"],
+// });
+
+
+// export const metadata = {
+//     title: {
+//         default: "Doc Appoint",
+//         template: "%s | Doc Appoint",
+//     },
+//     description: "Doctor Appointment Website",
+// };
+
+// export default function RootLayout({ children }) {
+//   return (
+//     <html
+//       lang="en"
+//       className={`${OutfitFont.className} bg-background/70 backdrop-blur-xl`}
+//     >
+//       <body className="min-h-full flex flex-col">
+//         <ThemesProvider>
+//         <Navbar />
+//         <main className="min-h-screen container mx-auto">
+//           {children}
+//         </main>
+//         <Footer />
+//       <ToastProvider />
+//       </ThemesProvider>
+//         </body>
+//     </html>
+//   );
+// }

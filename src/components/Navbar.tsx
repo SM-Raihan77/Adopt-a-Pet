@@ -2,16 +2,13 @@
 
 import { useState } from "react";
 
-
-// import ThemeSwitch from "./ThemeSwitch";
-import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import NavLink from "./NavLink";
 import { MdDashboard } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { BiLogOut } from "react-icons/bi";
-
+import { FaPaw } from "react-icons/fa";
 
 interface UserSession {
   id: string;
@@ -23,7 +20,6 @@ interface UserSession {
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { data: session } = authClient.useSession();
-  
 
   const user = session?.user as UserSession | undefined;
 
@@ -31,14 +27,12 @@ export default function Navbar() {
     await authClient.signOut();
   };
 
- return (
-  
+  return (
     <div className="w-full h-16 relative">
-     
       <nav className="fixed top-0 left-0 z-50 w-full border-b border-separator bg-background/80 backdrop-blur-lg shadow-sm">
         <header className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           
-       
+          {/* Brand/Logo Area */}
           <div className="flex items-center gap-4 md:flex-1">
             <button
               className="md:hidden text-slate-700"
@@ -71,38 +65,47 @@ export default function Navbar() {
               </svg>
             </button>
             
+           
             <div className="flex items-center gap-2 cursor-pointer">
-              <div className="bg-red-600 text-white p-2 rounded-full shadow-md shadow-red-200">
-                {/* <Heart className="w-5 h-5 fill-current" /> */}
+              <div className="bg-red-600 text-white p-2 rounded-full shadow-md shadow-red-200 flex items-center justify-center">
+                <FaPaw className="text-xl" />
               </div>
-              <span className="text-xl font-bold text-slate-900 tracking-tight">
-                Bhado<span className="text-red-600">N.</span>
+              <span className="text-xl font-extrabold text-base-900 tracking-tight">
+                Paws<span className="text-[#00A896]">-Adopt</span>
               </span>
             </div>
           </div>
 
-      {/* desktop */}
+          {/* Desktop Menu */}
           <div className="hidden md:flex justify-center md:flex-1">
             <ul className="flex items-center gap-4">
               <li>
                 <NavLink href="/">Home</NavLink>
               </li>
               <li>
-                <NavLink href="/search">Search</NavLink>
+                <NavLink href="/explore-pet">Explore Pets</NavLink>
               </li>
+             
               {user && (
-                <li>
-                  <NavLink href="/donation">Donation</NavLink>
-                </li>
+                <>
+                  <li>
+                    <NavLink href="/support">Support</NavLink>
+                  </li>
+                  <li>
+                    <NavLink href="/dashboard">Dashboard</NavLink>
+                  </li>
+                  <li>
+                    <NavLink href="/about">About Us</NavLink>
+                  </li>
+                </>
               )}
             </ul>
           </div>
 
-          {/* ইউজার প্রোফাইল / অথেনটিকেশন বাটনসমূহ */}
+          {/* User Profile / Auth Status */}
           <div className="flex items-center justify-end gap-4 md:flex-1">
             {!user && (
               <div className="hidden items-center gap-4 md:flex">
-               
                 <NavLink href="/login">Login</NavLink>
                 <NavLink href="/signup">
                   <Button className="bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl px-5">
@@ -120,52 +123,53 @@ export default function Navbar() {
                       <Avatar.Image
                         referrerPolicy="no-referrer"
                         alt="User Avatar"
-                        src={user?.image}
+                        src={user?.image || undefined}
                       />
-                      <Avatar.Fallback>{user.name?.charAt(0)}</Avatar.Fallback>
+                      <Avatar.Fallback>{user.name?.charAt(0) || "U"}</Avatar.Fallback>
                     </Avatar>
                   </Dropdown.Trigger>
                   <Dropdown.Popover>
                     <div className="px-3 pt-3 pb-1">
                       <div className="flex items-center gap-2">
                         <Avatar size="sm">
-                          <Avatar.Image alt={user?.name} src={user?.image} />
-                          <Avatar.Fallback delayMs={600}>JD</Avatar.Fallback>
+                          <Avatar.Image alt={user?.name} src={user?.image || undefined} />
+                          <Avatar.Fallback>JD</Avatar.Fallback>
                         </Avatar>
                         <div className="flex flex-col gap-0">
-                          <p className="text-sm leading-5 font-medium">
+                          <p className="text-sm leading-5 font-medium text-white">
                             {user?.name}
                           </p>
-                          <p className="text-xs leading-none text-muted">
+                          <p className="text-xs leading-none text-slate-400">
                             {user?.email}
                           </p>
                         </div>
                       </div>
                     </div>
+                   
                     <Dropdown.Menu
                       onAction={(key) => console.log(`Selected: ${key}`)}
                     >
-                      <Dropdown.Item id="new-file" textValue="New file">
+                      <Dropdown.Item key="dashboard" textValue="Dashboard">
                         <NavLink
                           className="flex items-center gap-2 w-full h-full"
                           href="/dashboard"
                         >
-                          <MdDashboard/>
+                          <MdDashboard />
                           <Label>Dashboard</Label>
                         </NavLink>
                       </Dropdown.Item>
 
-                      <Dropdown.Item id="copy-link" textValue="Copy link">
-                        <NavLink className="w-full h-full block" href="/dashboard/donor/profile">
-                          <CgProfile className="inline mr-2" />
+                      <Dropdown.Item key="profile" textValue="Profile">
+                        <NavLink className="w-full h-full flex items-center" href="/dashboard/donor/profile">
+                          <CgProfile className="mr-2" />
                           <Label>Profile</Label>
                         </NavLink>
                       </Dropdown.Item>
 
                       <Dropdown.Item
-                        id="delete-file"
-                        textValue="Delete file"
-                        variant="danger"
+                        key="logout"
+                        textValue="Logout"
+                        color="danger"
                         onClick={handleSignOut}
                       >
                         <div className="flex items-center gap-2 text-red-600">
@@ -178,12 +182,12 @@ export default function Navbar() {
                 </Dropdown>
               </div>
             )}
-            {/* <ThemeSwitch /> */}
           </div>
 
         </header>
 
-     {/* mobile */}
+        {/* Mobile Menu */}
+      
         {isMenuOpen && (
           <div className="border-t border-separator md:hidden bg-background w-full shadow-lg absolute left-0 top-16">
             <ul className="flex flex-col gap-2 p-4">
@@ -191,15 +195,18 @@ export default function Navbar() {
                 <NavLink href="/" className="block py-2">Home</NavLink>
               </li>
               <li>
-                <NavLink href="/search" className="block py-2">Search</NavLink>
+                <NavLink href="/explore-pet" className="block py-2">Explore Pets</NavLink>
               </li>
               {user && (
                 <>
                   <li>
-                    <NavLink href="/donation" className="block py-2">Donation</NavLink>
+                    <NavLink href="/support" className="block py-2">Support</NavLink>
                   </li>
                   <li>
                     <NavLink href="/dashboard" className="block py-2">Dashboard</NavLink>
+                  </li>
+                  <li>
+                    <NavLink href="/about" className="block py-2">About Us</NavLink>
                   </li>
                 </>
               )}
@@ -215,4 +222,4 @@ export default function Navbar() {
       </nav>
     </div>
   );
-};
+}

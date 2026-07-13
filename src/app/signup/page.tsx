@@ -5,7 +5,7 @@ import { Button, Card, Description, FieldError, Form, Input, Label, Separator, T
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const SignUpPage: React.FC = () => {
     const router = useRouter();
@@ -24,12 +24,12 @@ const SignUpPage: React.FC = () => {
         });
 
         if (data) {
-            // toast.success("Account created successfully");
+            toast.success("Account created successfully");
             router.push("/"); 
         }
         if (error) {
             console.error("Error creating account:", error);
-            // toast.error("Error creating account");
+            toast.error("Error creating account");
         }
     };
 

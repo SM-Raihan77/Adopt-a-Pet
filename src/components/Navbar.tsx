@@ -85,18 +85,19 @@ export default function Navbar() {
               <li>
                 <NavLink href="/explore-pet">Explore Pets</NavLink>
               </li>
-             
+              
+                  <li>
+                    <NavLink href="/support">Support</NavLink>
+                  </li>
               {user && (
                 <>
                   <li>
-                    <NavLink href="/support">Support</NavLink>
+                    <NavLink href="/add-pet" className="block py-2">Add Pet</NavLink>
                   </li>
                   <li>
                     <NavLink href="/dashboard">Dashboard</NavLink>
                   </li>
-                  <li>
-                    <NavLink href="/about">About Us</NavLink>
-                  </li>
+                  
                 </>
               )}
             </ul>
@@ -106,9 +107,10 @@ export default function Navbar() {
           <div className="flex items-center justify-end gap-4 md:flex-1">
             {!user && (
               <div className="hidden items-center gap-4 md:flex">
-                <NavLink href="/login">Login</NavLink>
+                <NavLink href="/login">
+                Login</NavLink>
                 <NavLink href="/signup">
-                  <Button className="bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl px-5">
+                  <Button className="bg-[#00A896] hover:bg-red-700 text-white font-semibold rounded-xl px-5">
                     Sign Up
                   </Button>
                 </NavLink>
@@ -160,7 +162,7 @@ export default function Navbar() {
                       </Dropdown.Item>
 
                       <Dropdown.Item key="profile" textValue="Profile">
-                        <NavLink className="w-full h-full flex items-center" href="/dashboard/donor/profile">
+                        <NavLink className="w-full h-full flex items-center" href="/profile">
                           <CgProfile className="mr-2" />
                           <Label>Profile</Label>
                         </NavLink>
@@ -197,17 +199,19 @@ export default function Navbar() {
               <li>
                 <NavLink href="/explore-pet" className="block py-2">Explore Pets</NavLink>
               </li>
-              {user && (
-                <>
+              
                   <li>
                     <NavLink href="/support" className="block py-2">Support</NavLink>
+                  </li>
+              {user && (
+                <>
+                   <li>
+                    <NavLink href="/add-pet" className="block py-2">Add Pet</NavLink>
                   </li>
                   <li>
                     <NavLink href="/dashboard" className="block py-2">Dashboard</NavLink>
                   </li>
-                  <li>
-                    <NavLink href="/about" className="block py-2">About Us</NavLink>
-                  </li>
+                 
                 </>
               )}
               {!user && (
